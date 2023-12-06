@@ -8,6 +8,12 @@ CRM API is an API for building CRM's. Get an API REST boilerplate to kickstart t
 - yarn start:dev
 - Define your business logic
 - Get a REST API with a MongoDB database to access your data.
+- Modules: 
+    - Users: create / manage users. 
+    - Products: products for sale.
+    - Inventory: for products that manage physical inventory
+    - Reservations: For time / slot based products or services. 
+    - Sales: All your sales. Inventory or Reservation based. - todo
 
 ## Installation
 
