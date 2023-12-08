@@ -1,0 +1,12 @@
+# docker-compose.yml
+version: '3.1'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: mainpass123
+      POSTGRES_DB: crmapi
+    volumes:
+       - ./data:/var/lib/postgresql/data
