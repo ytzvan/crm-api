@@ -7,9 +7,25 @@ import { UsersService } from './modules/users/users.service';
 import { ProductsModule } from './modules/products/products.module'; // The module has the controller and the service loaded
 import { InventoryController } from './modules/inventory/inventory.controller';
 import { ReservationsController } from './modules/reservations/reservations.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { User } from './modules/users/user.entity';
 
 @Module({
-  imports: [UsersModule, ProductsModule],
+  imports: [
+    UsersModule,
+    ProductsModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'root',
+      password: 'mainpass123',
+      database: 'crmapi',
+      entities: [User],
+      synchronize: true,
+    }),
+  ],
   controllers: [
     AppController,
     UsersController,
@@ -18,4 +34,6 @@ import { ReservationsController } from './modules/reservations/reservations.cont
   ],
   providers: [AppService, UsersService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
