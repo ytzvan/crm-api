@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
 @Controller('users')
 export class UsersController {
   constructor(private usersService: UsersService) {}
@@ -10,7 +11,17 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  findOne(id: number): Promise<User | null> {
+  @Get(':id')
+  async findOne(
+    @Param('id') id: number,
+  ): Promise<User | { message: string; code: string }> {
     return this.usersService.findOne(id);
+  }
+
+  @Post('new')
+  async create(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<User | { message: string; code: string }> {
+    return this.usersService.create(createUserDto);
   }
 }
