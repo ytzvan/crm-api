@@ -5,6 +5,12 @@ export class User {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
+  @Column({ default: '' })
+  uuid: string;
+
+  @Column({ default: '' })
+  shortUuid: string;
+
   @Column()
   firstName: string;
 

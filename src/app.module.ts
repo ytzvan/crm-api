@@ -10,6 +10,7 @@ import { ReservationsController } from './modules/reservations/reservations.cont
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { User } from './modules/users/user.entity';
+import { Products } from './modules/products/products.entity';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { User } from './modules/users/user.entity';
       username: 'root',
       password: 'mainpass123',
       database: 'crmapi',
-      entities: [User],
+      entities: [User, Products],
       synchronize: true,
     }),
   ],

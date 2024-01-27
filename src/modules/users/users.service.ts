@@ -4,6 +4,7 @@ import { User } from './user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class UsersService {
@@ -40,10 +41,14 @@ export class UsersService {
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(password, salt);
     const user = new User();
+    const uuid = uuidv4();
     Object.assign(user, createUserDto); // copy defaults
     user.email = createUserDto.email.toLowerCase();
     user.password = hashPassword;
     user.passwordSalt = salt;
+    user.uuid = uuid;
+    const shortUuid = user.uuid.substring(user.uuid.length - 10);
+    user.shortUuid = shortUuid.toUpperCase();
     try {
       const result = await this.userRepo.save(user);
       if (result) {
