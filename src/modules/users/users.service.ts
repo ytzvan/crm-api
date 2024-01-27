@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { DataSource, Repository } from 'typeorm';
@@ -22,8 +22,23 @@ export class UsersService {
     return this.userRepo.find();
   }
 
+  getShortUuidByEmail(shortUuid: string): Promise<User[]> {
+    return this.userRepo.find({
+      where: {
+        shortUuid: shortUuid,
+      },
+    });
+  }
+
   findOne(id: number): Promise<User | { message: string; code: string }> {
     return this.userRepo.findOneBy({ id });
+  }
+  async findUserByEmail(email: string): Promise<User> {
+    return await this.userRepo.findOneBy({ email: email });
+  }
+
+  async findUserByShortUuid(shortUuid: string): Promise<User> {
+    return await this.userRepo.findOneBy({ shortUuid: shortUuid });
   }
 
   async create(createUserDto: CreateUserDto) {
@@ -50,6 +65,18 @@ export class UsersService {
     const shortUuid = user.uuid.substring(user.uuid.length - 10);
     user.shortUuid = shortUuid.toUpperCase();
     try {
+      const shortUuidExist = await this.findUserByShortUuid(user.shortUuid);
+      console.log('shortUuid', shortUuid);
+      if (shortUuidExist) {
+        // generate a new one an try agaiun
+        throw new HttpException(
+          {
+            status: HttpStatus.CONFLICT,
+            error: 'shortUuidExist already exists',
+          },
+          HttpStatus.CONFLICT,
+        );
+      }
       const result = await this.userRepo.save(user);
       if (result) {
         return result;
