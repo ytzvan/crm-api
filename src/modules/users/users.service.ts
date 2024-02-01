@@ -87,7 +87,8 @@ export class UsersService {
         };
       }
     } catch (e) {
-      throw new Error();
+      console.log("Error: ", e );
+      throw new Error(e);
     }
   }
 }

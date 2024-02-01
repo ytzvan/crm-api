@@ -5,17 +5,17 @@ export class User {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({ default: '' })
+  @Column({ default: null })
   uuid: string;
 
-  @Column({ default: '' })
+  @Column({ default: null })
   shortUuid: string;
 
-  @Column()
+  @Column({ default: null })
   firstName: string;
 
-  @Column()
-  lastName: string;
+  @Column({ default: null })
+  lastName: string; 
 
   @Column({ default: false })
   isActive: boolean;
@@ -29,6 +29,6 @@ export class User {
   @Column()
   passwordSalt: string;
 
-  @Column()
+  @Column({ default: null })
   primaryPhone: string;
 }
