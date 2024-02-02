@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -31,4 +31,18 @@ export class User {
 
   @Column({ default: null })
   primaryPhone: string;
+
+  @CreateDateColumn({
+    name: 'created_date',
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
+  createdDate: Date;
+
+  @UpdateDateColumn({
+    name: 'modified_date',
+    type: 'timestamptz',
+    nullable: true,
+  })
+  modifiedDate: Date;
 }
