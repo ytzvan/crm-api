@@ -10,15 +10,18 @@ import { ReservationsController } from './modules/reservations/reservations.cont
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { User } from './modules/users/user.entity';
+import { Company } from './modules/companies/companies.entity';
 import { Products } from './modules/products/products.entity';
 import { AuthModule } from './auth/auth.module';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
+import { CompaniesModule } from './modules/companies/companies.module';
 
 @Module({
   imports: [
     UsersModule,
     ProductsModule,
+    CompaniesModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -26,7 +29,7 @@ import { AuthService } from './auth/auth.service';
       username: 'root',
       password: 'mainpass123',
       database: 'crmapi',
-      entities: [User, Products],
+      entities: [User, Products, Company],
       synchronize: true,
     }),
     AuthModule,
@@ -36,7 +39,7 @@ import { AuthService } from './auth/auth.service';
     UsersController,
     InventoryController,
     ReservationsController,
-    AuthController
+    AuthController,
   ],
   providers: [AppService, UsersService, AuthService],
 })

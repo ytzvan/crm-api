@@ -1,6 +1,7 @@
 import { IsString, Matches } from 'class-validator';
+import { Company } from '../../companies/companies.entity';
 
-export class CreateUserDto {
+export class CreateSuperAdminDto {
   email: string;
   @IsString()
   /*@Matches(
@@ -15,5 +16,5 @@ export class CreateUserDto {
   lastName: string;
   primaryPhone: string;
   isActive: boolean;
-  company: number;
+  companyName: string;
 }

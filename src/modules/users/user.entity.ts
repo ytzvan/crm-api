@@ -1,4 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Company } from '../companies/companies.entity';
 
 @Entity()
 export class User {
@@ -15,7 +24,7 @@ export class User {
   firstName: string;
 
   @Column({ default: null })
-  lastName: string; 
+  lastName: string;
 
   @Column({ default: false })
   isActive: boolean;
@@ -45,4 +54,8 @@ export class User {
     nullable: true,
   })
   modifiedDate: Date;
+
+  @ManyToOne(() => Company)
+  @JoinColumn({ name: 'company_id'})
+  company: Company;
 }
