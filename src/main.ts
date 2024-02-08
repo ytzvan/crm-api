@@ -6,7 +6,6 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-
   const config = new DocumentBuilder()
     .setTitle('CRM API Docs')
     .setDescription('The CRM-API docs')
